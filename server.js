@@ -3,12 +3,16 @@ const dotenv = require("dotenv");
 const colors = require("colors");
 const morgan = require("morgan");
 const cors = require("cors");
+const connectDB = require("./config/db");
 
 //express
 const app = express();
 
 //dot env config
 dotenv.config();
+
+//mongoDb Connection
+connectDB();
 
 //middlewares
 app.use(express.json());
