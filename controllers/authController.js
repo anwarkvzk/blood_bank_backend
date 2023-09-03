@@ -46,19 +46,21 @@ const loginController = async (req, res) => {
       req.body.password,
       user.password
     );
-    if(!comparePassword){
+    if (!comparePassword) {
       return res.status(500).send({
         success: false,
-        message: 'Invalid Credentials'
-      })
+        message: "Invalid Credentials",
+      });
     }
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {expiresIn: '1d'});
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
     return res.status(200).send({
-      success:true,
-      message: 'Login Successfully',
-      token ,
-      user, 
-    })
+      success: true,
+      message: "Login Successfully",
+      token,
+      user,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -68,4 +70,23 @@ const loginController = async (req, res) => {
     });
   }
 };
-module.exports = { registerController, loginController };
+
+//Get Current User
+const currentUserController = async (req, res) => {
+  try {
+    const user = await userModels.findOne({ _id: req.body.userId });
+    return res.status(200).send({
+      success: true,
+      message: "User Fetched Successfully",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: false,
+      message: "Unable to get Current User",
+      error,
+    });
+  }
+};
+module.exports = { registerController, loginController, currentUserController };
