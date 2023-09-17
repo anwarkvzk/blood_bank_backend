@@ -1,6 +1,7 @@
 const inventoryModel = require("../models/inventoryModel");
 const userModels = require("../models/userModels");
 
+
 //Create Inventory
 const createInventoryController = async (req, res) => {
   try {
